@@ -1,0 +1,9 @@
+.cache/*
+.vscode/*
+build/*
+Testing/*
+CMakeFiles/*
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+DartConfiguration.tcl

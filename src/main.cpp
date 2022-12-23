@@ -1,7 +1,6 @@
 #include "raylib.h"
 
 #include "Vnyl.hpp"
-#include "Action.hpp"
 
 constexpr auto SCREEN_WIDTH  = 800;
 constexpr auto SCREEN_HEIGHT = 450;
@@ -10,7 +9,7 @@ int main()
 {
 
     vnyl::Vnyl v = vnyl::Vnyl();
-    vnyl::Action a = vnyl::Action();
+    v.run();
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Window title");
     SetTargetFPS(60);

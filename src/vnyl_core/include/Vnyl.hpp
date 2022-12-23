@@ -5,5 +5,7 @@ namespace vnyl {
         public:
             Vnyl();
             virtual ~Vnyl();
+
+            void run();
     };
 };

@@ -23,11 +23,11 @@ namespace vnyl {
         }
 
         if(m_Actions[m_ActionIndex]->IsFinished){
-            m_ActionIndex++;
-            if(m_ActionIndex >= m_Actions.size()){
+            if(m_ActionIndex + 1 >= m_Actions.size()){
                 QueueFinish = true;
                 return;
             }
+            m_ActionIndex++;
             m_Actions[m_ActionIndex]->onStart();
             return;
         }

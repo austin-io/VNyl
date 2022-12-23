@@ -4,30 +4,41 @@
 
 VNyl is a C++ Visual Novel making framework!
 
-## Installation / Build
+## Installation 
 
-Download and install [vcpkg](https://github.com/microsoft/vcpkg). Make sure it is *not* in this project's files.
+Clone this repository. Then clone the raylib repository into `libs/raylib`
 
-After installing run:
-
+```bash
+# Start in project root
+$ cd libs
+$ git clone https://github.com/raysan5/raylib.git
 ```
-$ vcpkg install sdl2
+
+I recommend changing the `CMakeLists.txt` file so that it can use your project name for the executable:
+
+```bash
+# Change
+project(VNyl C CXX)
+
+# To
+project(<Your_Project_Name> C CXX)
 ```
 
-Also setup env variables in your `.bashrc` for `VCPKG_HOME`, and `SDL2_DIR` (this should be located in `$VCPKG_HOME/installed/x64-linux/share/sdl2`). Then run in the root of this project:
+## Build
 
+Now build the project from the root directory:
+
+```bash
+# Project root
+$ cmake -B ./build
 ```
-$ cmake -B ./build -S . "-DCMAKE_TOOLCHAIN_FILE=$VCPKG_HOME/scripts/buildsystems/vcpkg.cmake"
-$ cmake --build ./build
+
+If there are build errors, this is likely due to missing dependencies. Look for any missing packages such as `libxinerama-dev`, `libxcursor-dev`, `libxi-dev`, etc. You will need to install them using your systems package manager. For example:
+
+```bash
+$ sudo apt install libxi-dev
 ```
 
 ## Recommended
 
-When using VSCode install the `C/C++ Extension Pack`.
-Add these lines to your `.vscode/settings.json` file:
-
-```json
-"cmake.configureSettings": {
-        "CMAKE_TOOLCHAIN_FILE": "$VCPKG_HOME/scripts/buildsystems/vcpkg.cmake"
-    }
-```
+When using VSCode install the `C/C++ Extension Pack`. CMake will try to configure itself into the project, and may need to be reloaded a few times.

@@ -10,7 +10,7 @@ set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # or games
 
 add_subdirectory(libs/raylib)
 
-file(GLOB_RECURSE VNYL_SRC_FILES CMAKE_CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/vnyl_core/src/*.cpp)
+file(GLOB_RECURSE VNYL_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/vnyl_core/src/*.cpp)
 
 add_executable(${PROJECT_NAME} src/main.cpp ${VNYL_SRC_FILES})
 

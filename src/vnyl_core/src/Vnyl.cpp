@@ -31,6 +31,12 @@ namespace vnyl {
         }
 
         al.onEnd();
+
+        al.clean();
+    }
+
+    void Vnyl::clean(){
+
     }
 
 }

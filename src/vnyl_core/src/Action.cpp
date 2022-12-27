@@ -6,7 +6,7 @@ namespace vnyl {
     }
 
     Action::~Action(){
-
+        std::cout << "Action destroyed\n";
     }
 
     void Action::onStart(){
@@ -19,6 +19,10 @@ namespace vnyl {
 
     void Action::onEnd(){
         IsFinished = true;
+    }
+
+    void Action::clean(){
+
     }
 
 };

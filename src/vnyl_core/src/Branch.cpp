@@ -6,10 +6,6 @@ namespace vnyl {
         m_Callback = callback;
     }
 
-    Branch::~Branch(){
-
-    }
-
     void Branch::onStart(){
 
         std::cout << "Starting branch\n";

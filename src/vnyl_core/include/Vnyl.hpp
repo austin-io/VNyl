@@ -12,5 +12,6 @@ namespace vnyl {
             virtual ~Vnyl();
 
             void run();
+            void clean();
     };
 };

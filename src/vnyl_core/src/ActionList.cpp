@@ -4,8 +4,6 @@ namespace vnyl {
     ActionList::ActionList(std::vector<Action*> actions){
         m_Actions = actions;
     }
-
-    ActionList::~ActionList(){}
     
     void ActionList::onStart(){
         if(m_Actions.size() == 0){
@@ -38,5 +36,12 @@ namespace vnyl {
         }
 
         m_Actions[m_ActionIndex]->onUpdate();
+    }
+
+    void ActionList::clean(){
+        for(int i = 0; i < m_Actions.size(); i++){
+            m_Actions[i]->clean();
+            delete m_Actions[i];
+        }        
     }
 };

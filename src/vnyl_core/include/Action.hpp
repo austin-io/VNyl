@@ -13,7 +13,7 @@ namespace vnyl {
             virtual void onStart();
             virtual void onUpdate();
             virtual void onEnd();
-        
+            virtual void clean();
 
         protected:
     };

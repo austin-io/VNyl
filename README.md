@@ -30,7 +30,7 @@ Now build the project from the root directory:
 
 ```bash
 # Project root
-$ cmake -B ./build
+$ cmake --build ./build --config Debug --target all -j 22 --
 ```
 
 If there are build errors, this is likely due to missing dependencies. Look for any missing packages such as `libxinerama-dev`, `libxcursor-dev`, `libxi-dev`, etc. You will need to install them using your systems package manager. For example:

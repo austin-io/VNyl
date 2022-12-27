@@ -1,9 +1,9 @@
 #include "Branch.hpp"
 
 namespace vnyl {
-    Branch::Branch(std::vector<Action*> actions, bool b)
+    Branch::Branch(std::function<bool()> callback, std::vector<Action*> actions)
     : ActionList(actions) {
-        this->condition = b;
+        m_Callback = callback;
     }
 
     Branch::~Branch(){
@@ -13,6 +13,8 @@ namespace vnyl {
     void Branch::onStart(){
 
         std::cout << "Starting branch\n";
+
+        this->condition = m_Callback();
         if(!this->condition){
             QueueFinish = true;
             return;

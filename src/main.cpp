@@ -9,8 +9,8 @@ const int SCREEN_HEIGHT = SCREEN_WIDTH / AR;
 int main()
 {
 
-    //vnyl::Vnyl v = vnyl::Vnyl();
-    //v.run();
+    vnyl::Vnyl v = vnyl::Vnyl();
+    v.run();
 
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");

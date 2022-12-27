@@ -9,12 +9,18 @@ namespace vnyl {
     void Vnyl::run(){
         
         ActionList al = ActionList({
-            new Branch({
+            new Branch(
+                [](){
+                    return true;
+                    }, {
                 new Speak("Hello VNYL! This is true"),
                 new Speak("Part 2"),
-                new Speak("Deal with it")}, true),
-            new Branch({
-                new Speak("Hello VNYL! This is false")}, false),
+                new Speak("Deal with it")}),
+            new Branch(
+                [](){
+                    return false;
+                }, {
+                new Speak("Hello VNYL! This is false")}),
         });
 
         al.onStart();

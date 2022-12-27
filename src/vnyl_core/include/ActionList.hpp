@@ -2,6 +2,7 @@
 
 #include "Action.hpp"
 #include <vector>
+#include <memory>
 
 namespace vnyl {
     class ActionList : public Action {

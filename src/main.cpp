@@ -2,8 +2,9 @@
 
 #include "Vnyl.hpp"
 
-constexpr auto SCREEN_WIDTH  = 800;
-constexpr auto SCREEN_HEIGHT = 450;
+const float AR = 16/9.0;
+const int SCREEN_WIDTH  = 1280;
+const int SCREEN_HEIGHT = SCREEN_WIDTH / AR;
 
 int main()
 {
@@ -11,29 +12,65 @@ int main()
     vnyl::Vnyl v = vnyl::Vnyl();
     v.run();
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Window title");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");
     SetTargetFPS(60);
 
-    Texture2D texture = LoadTexture(ASSETS_PATH"test.png");
+    //Texture2D texture = LoadTexture(ASSETS_PATH"test.png");
+
+    Texture2D leftCharacterTex = LoadTexture(ASSETS_PATH"Akari/Akari_Neutral.png");
+    Texture2D rightCharacterTex = LoadTexture(ASSETS_PATH"Setsuko/Setsuko_Neutral.png");
+    Texture2D bgCampusTex = LoadTexture(ASSETS_PATH"BG/campus.png");
+
+    bgCampusTex.width = SCREEN_WIDTH;
+    bgCampusTex.height = bgCampusTex.width * 2/3.0;
+
+    float ar = leftCharacterTex.width / (float)leftCharacterTex.height;
+    leftCharacterTex.height = SCREEN_HEIGHT * 1;
+    leftCharacterTex.width = leftCharacterTex.height * ar;
+
+    rightCharacterTex.height = SCREEN_HEIGHT * 1;
+    rightCharacterTex.width = rightCharacterTex.height * ar;
+
+    //Image leftCharacterImg = LoadImage(ASSETS_PATH"Akari/Akari_Neutral.png");
+    //Image rightCharacterImg = LoadImage(ASSETS_PATH"Setsuko/Setsuko_Neutral.png");
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
-        const int texture_x = SCREEN_WIDTH / 2 - texture.width / 2;
-        const int texture_y = SCREEN_HEIGHT / 2 - texture.height / 2;
-        DrawTexture(texture, texture_x, texture_y, WHITE);
+        // Background
+        DrawTexture(
+            bgCampusTex,
+            (SCREEN_WIDTH/(float)2) - (bgCampusTex.width/(float)2),
+            0,
+            WHITE
+            );
 
-        const char* text = "THIS TAKES TOO LONG";
-        const Vector2 text_size = MeasureTextEx(GetFontDefault(), text, 20, 1);
-        DrawText(text, SCREEN_WIDTH / 2 - text_size.x / 2, texture_y + texture.height + text_size.y + 10, 20, BLACK);
+        // Characters
+        DrawTexture(
+            leftCharacterTex,
+            (SCREEN_WIDTH/(float)4) - (leftCharacterTex.width/(float)2),
+            (SCREEN_HEIGHT - (float)leftCharacterTex.height + 50),
+            WHITE
+        );
+
+        DrawTexture(
+            rightCharacterTex, 
+            ((3*SCREEN_WIDTH/(float)4) - (rightCharacterTex.width/(float)2)),
+            (SCREEN_HEIGHT - (float)rightCharacterTex.height + 50), 
+            WHITE);
+
+        DrawRectangle(0, SCREEN_HEIGHT-(SCREEN_HEIGHT*0.25), SCREEN_WIDTH, (SCREEN_HEIGHT*0.25), ColorAlpha(BLACK, 0.75));
 
         EndDrawing();
     }
 
-    UnloadTexture(texture);
+    //UnloadTexture(texture);
+
+    UnloadTexture(leftCharacterTex);
+    UnloadTexture(rightCharacterTex);
 
     CloseWindow();
     return 0;

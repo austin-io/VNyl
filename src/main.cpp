@@ -9,20 +9,26 @@ const int SCREEN_HEIGHT = SCREEN_WIDTH / AR;
 int main()
 {
 
-    vnyl::Vnyl v = vnyl::Vnyl();
-    v.run();
+    //vnyl::Vnyl v = vnyl::Vnyl();
+    //v.run();
+
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");
     SetTargetFPS(60);
 
     //Texture2D texture = LoadTexture(ASSETS_PATH"test.png");
 
-    Texture2D leftCharacterTex = LoadTexture(ASSETS_PATH"Akari/Akari_Neutral.png");
-    Texture2D rightCharacterTex = LoadTexture(ASSETS_PATH"Setsuko/Setsuko_Neutral.png");
-    Texture2D bgCampusTex = LoadTexture(ASSETS_PATH"BG/campus.png");
+    vnyl::Character c = vnyl::Character("John", GREEN, {ASSETS_PATH"Akari/Akari_Neutral.png"}, {"idle"});
+    c.show("idle");
 
+    Texture2D bgCampusTex = LoadTexture(ASSETS_PATH"BG/campus.png");
+    
     bgCampusTex.width = SCREEN_WIDTH;
     bgCampusTex.height = bgCampusTex.width * 2/3.0;
+
+    /*
+    Texture2D leftCharacterTex = LoadTexture(ASSETS_PATH"Akari/Akari_Neutral.png");
+    Texture2D rightCharacterTex = LoadTexture(ASSETS_PATH"Setsuko/Setsuko_Neutral.png");
 
     float ar = leftCharacterTex.width / (float)leftCharacterTex.height;
     leftCharacterTex.height = SCREEN_HEIGHT * 1;
@@ -30,6 +36,7 @@ int main()
 
     rightCharacterTex.height = SCREEN_HEIGHT * 1;
     rightCharacterTex.width = rightCharacterTex.height * ar;
+    */
 
     //Image leftCharacterImg = LoadImage(ASSETS_PATH"Akari/Akari_Neutral.png");
     //Image rightCharacterImg = LoadImage(ASSETS_PATH"Setsuko/Setsuko_Neutral.png");
@@ -48,6 +55,9 @@ int main()
             WHITE
             );
 
+        c.draw();
+
+        /*
         // Characters
         DrawTexture(
             leftCharacterTex,
@@ -61,6 +71,7 @@ int main()
             ((3*SCREEN_WIDTH/(float)4) - (rightCharacterTex.width/(float)2)),
             (SCREEN_HEIGHT - (float)rightCharacterTex.height + 50), 
             WHITE);
+        */
 
         DrawRectangle(0, SCREEN_HEIGHT-(SCREEN_HEIGHT*0.25), SCREEN_WIDTH, (SCREEN_HEIGHT*0.25), ColorAlpha(BLACK, 0.75));
 
@@ -69,8 +80,8 @@ int main()
 
     //UnloadTexture(texture);
 
-    UnloadTexture(leftCharacterTex);
-    UnloadTexture(rightCharacterTex);
+    //UnloadTexture(leftCharacterTex);
+    //UnloadTexture(rightCharacterTex);
 
     CloseWindow();
     return 0;

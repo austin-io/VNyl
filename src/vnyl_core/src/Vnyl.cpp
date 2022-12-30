@@ -12,15 +12,17 @@ namespace vnyl {
             new Branch(
                 [](){
                     return true;
-                    }, {
-                new Speak("Hello VNYL! This is true"),
-                new Speak("Part 2"),
-                new Speak("Deal with it")}),
+                }, {
+                    new Speak("Hello VNYL! This is true"),
+                    new Speak("Part 2"),
+                    new Speak("Deal with it")
+                }),
             new Branch(
                 [](){
                     return false;
                 }, {
-                new Speak("Hello VNYL! This is false")}),
+                    new Speak("Hello VNYL! This is false")
+                }),
         });
 
         al.onStart();

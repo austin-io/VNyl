@@ -8,20 +8,22 @@ namespace vnyl {
 
     void Vnyl::run(){
         
+        Character c = Character("John", GREEN, {ASSETS_PATH"Akari/Akari_Neutral.png"}, {"idle"});
+
         ActionList al = ActionList({
             new Branch(
                 [](){
                     return true;
                 }, {
-                    new Speak("Hello VNYL! This is true"),
-                    new Speak("Part 2"),
-                    new Speak("Deal with it")
+                    new Speak(&c, "Hello VNYL! This is true"),
+                    new Speak(&c, "Part 2"),
+                    new Speak(&c, "Deal with it")
                 }),
             new Branch(
                 [](){
                     return false;
                 }, {
-                    new Speak("Hello VNYL! This is false")
+                    new Speak(&c, "Hello VNYL! This is false")
                 }),
         });
 

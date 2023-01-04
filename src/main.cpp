@@ -9,15 +9,14 @@ const int SCREEN_HEIGHT = SCREEN_WIDTH / AR;
 int main()
 {
 
-    vnyl::Vnyl v = vnyl::Vnyl();
-    v.run();
-
-
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");
     SetTargetFPS(60);
 
-    vnyl::Character c = vnyl::Character("John", GREEN, {ASSETS_PATH"Akari/Akari_Neutral.png"}, {"idle"});
-    c.show("idle");
+    vnyl::Vnyl v = vnyl::Vnyl();
+    v.run();
+    
+    //vnyl::Character c = vnyl::Character("John", GREEN, {ASSETS_PATH"Akari/Akari_Neutral.png"}, {"idle"});
+    //c.show("idle");
 
     Texture2D bgCampusTex = LoadTexture(ASSETS_PATH"BG/campus.png");
     
@@ -38,12 +37,14 @@ int main()
             Fade(WHITE, 0.75)
             );
 
-        c.draw();
+        //c.draw();
 
         DrawRectangle(0, SCREEN_HEIGHT-(SCREEN_HEIGHT*0.25), SCREEN_WIDTH, (SCREEN_HEIGHT*0.25), ColorAlpha(BLACK, 0.75));
 
         EndDrawing();
     }
+
+    UnloadTexture(bgCampusTex);
 
     CloseWindow();
     return 0;

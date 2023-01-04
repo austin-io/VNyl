@@ -1,18 +1,17 @@
 #pragma once
 
 #include "Action.hpp"
+#include "Character.hpp"
 #include <iostream>
 
 namespace vnyl {
     class Speak : public Action {
         public:
-            Speak(std::string s){ phrase = s;}
+            Speak(Character* character, std::string s);
 
-            virtual void onStart() override {
-                std::cout << phrase << std::endl;
-                QueueFinish = true;
-            }
+            virtual void onStart() override;
 
+            Character* speaker;
             std::string phrase = "";
     };
 };

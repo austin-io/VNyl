@@ -16,12 +16,12 @@ namespace vnyl {
             void show(std::string emotion);
             void hide();
 
-        private:
             std::string currentSprite = "", name = "";
+        private:
             Vector2 pos = Vector2{0,0};
             Color themeColor = GREEN;
             bool isHidden = true;
             std::unordered_map<std::string, Texture2D> spriteMap;
             std::vector<std::string> keys;
     };
-} 
+};

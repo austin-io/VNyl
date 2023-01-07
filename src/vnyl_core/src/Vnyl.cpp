@@ -23,8 +23,14 @@ namespace vnyl {
             {ASSETS_PATH"Akari/Akari_Neutral.png",
              ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
             {"idle", "sus"});
+
+        Character c2 = Character("Sarah", GREEN, 
+            {ASSETS_PATH"Akari/Akari_Neutral.png",
+             ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
+            {"idle", "sus"});
         
         characters.push_back(&c);
+        characters.push_back(&c2);
 
         ActionList al = ActionList({//*
             new Branch(
@@ -32,8 +38,8 @@ namespace vnyl {
                     return true;
                 }, {
                     new Show(&c, "idle"),
-                    new Show(&c, "idle", true),
-                    new Show(&c, "sus"),
+                    //new Show(&c, "idle", true),
+                    new Show(&c2, "sus", false, Character::LEFT),
                     new Speak(&c, "Hello VNYL! This is true"),
                     new Speak(&c, "Part 2"),
                     new Speak(&c, "Deal with it")

@@ -45,7 +45,7 @@ When using VSCode install the `C/C++ Extension Pack`. CMake will try to configur
 
 ## TODO
 
-1. Draw/hide characters. Add to list. Have predefined locations. Fade in/ out
+1. ~~Draw/hide characters. Add to list. Have predefined locations. Fade in/ out~~
 2. Set background image. Preload all of them. Add textures to dictionaries and select one
 3. Set background music. Preload all of them. Add audio to dictionaries and select one to play on loop
 4. Play sound effects. Preload all of them. Halt execution until finished?

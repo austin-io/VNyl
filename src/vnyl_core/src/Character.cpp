@@ -76,7 +76,7 @@ namespace vnyl {
     }
 
     void Character::setPosition(Vector2 newPosition){
-
+        m_CurrentPosition = newPosition;
     }
 
 }

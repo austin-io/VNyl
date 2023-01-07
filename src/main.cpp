@@ -2,19 +2,19 @@
 
 #include "Vnyl.hpp"
 
+/*
 const float AR = 16/9.0;
 const int SCREEN_WIDTH  = 1280;
 const int SCREEN_HEIGHT = SCREEN_WIDTH / AR;
+*/
 
-int main()
-{
-
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");
-    SetTargetFPS(60);
+int main() {
 
     vnyl::Vnyl v = vnyl::Vnyl();
     v.run();
     
+    return 0;
+    /*
     //vnyl::Character c = vnyl::Character("John", GREEN, {ASSETS_PATH"Akari/Akari_Neutral.png"}, {"idle"});
     //c.show("idle");
 
@@ -48,4 +48,5 @@ int main()
 
     CloseWindow();
     return 0;
+    */
 }

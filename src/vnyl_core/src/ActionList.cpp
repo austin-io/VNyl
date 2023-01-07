@@ -20,6 +20,8 @@ namespace vnyl {
             return;
         }
 
+        if(IsFinished || QueueFinish) return;
+
         if(m_Actions[m_ActionIndex]->IsFinished){
             if(m_ActionIndex + 1 >= m_Actions.size()){
                 QueueFinish = true;

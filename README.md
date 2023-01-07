@@ -42,3 +42,15 @@ $ sudo apt install libxi-dev
 ## Recommended
 
 When using VSCode install the `C/C++ Extension Pack`. CMake will try to configure itself into the project, and may need to be reloaded a few times.
+
+## TODO
+
+1. Draw/hide characters. Add to list. Have predefined locations. Fade in/ out
+2. Set background image. Preload all of them. Add textures to dictionaries and select one
+3. Set background music. Preload all of them. Add audio to dictionaries and select one to play on loop
+4. Play sound effects. Preload all of them. Halt execution until finished?
+5. Code block. Pass in a generic lambda to execute
+6. While loop. Repeat Action List until condition is false
+7. Show text. Reveal text character by character. Display character name. Click to skip, click to continue
+8. Show menu options. Show a list of centered boxes in a vertical list layout. Pass in int pointer variable, return index of chosen option
+9. Clear screen. Remove all text, characters, and background

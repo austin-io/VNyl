@@ -4,6 +4,7 @@
 #include "Speak.hpp"
 #include "Branch.hpp"
 #include "Character.hpp"
+#include "Show.hpp"
 
 namespace vnyl {
     class Vnyl {

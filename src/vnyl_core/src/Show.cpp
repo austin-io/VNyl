@@ -8,14 +8,17 @@ namespace vnyl {
     }
 
     void Show::onStart() {
-        if(m_Hide)
-            m_Character->hide();
-        else
+        if(!m_Hide)
             m_Character->show(m_Emotion);
-        
-        QueueFinish = true;
     }
 
     void Show::onUpdate() {
+        float fadeDirection = m_Hide ? -1.0f : 1.0f;
+        if(!m_Character->addAlpha(fadeDirection * GetFrameTime())){
+            QueueFinish = true;
+
+            if(m_Hide)
+                m_Character->hide();
+        }
     }
 };

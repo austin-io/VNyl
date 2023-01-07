@@ -19,7 +19,10 @@ namespace vnyl {
 
         std::vector<Character*> characters = std::vector<Character*>();
 
-        Character c = Character("John", GREEN, {ASSETS_PATH"Akari/Akari_Neutral.png"}, {"idle"});
+        Character c = Character("Sarah", GREEN, 
+            {ASSETS_PATH"Akari/Akari_Neutral.png",
+             ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
+            {"idle", "sus"});
         
         characters.push_back(&c);
 
@@ -29,6 +32,8 @@ namespace vnyl {
                     return true;
                 }, {
                     new Show(&c, "idle"),
+                    new Show(&c, "idle", true),
+                    new Show(&c, "sus"),
                     new Speak(&c, "Hello VNYL! This is true"),
                     new Speak(&c, "Part 2"),
                     new Speak(&c, "Deal with it")

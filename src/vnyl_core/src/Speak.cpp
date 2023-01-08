@@ -32,6 +32,9 @@ namespace vnyl {
 
         m_TextCounter += GetFrameTime() * 50;
 
+        if(m_TextCounter >= phrase.size())
+            m_TextAnimFinished = true;
+
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
             if(m_TextAnimFinished) QueueFinish = true;
             m_TextAnimFinished = true;

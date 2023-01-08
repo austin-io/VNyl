@@ -53,4 +53,5 @@ When using VSCode install the `C/C++ Extension Pack`. CMake will try to configur
 6. While loop. Repeat Action List until condition is false
 7. Show text. Reveal text character by character. Display character name. Click to skip, click to continue
 8. Show menu options. Show a list of centered boxes in a vertical list layout. Pass in int pointer variable, return index of chosen option
-9. Clear screen. Remove all text, characters, and background. Draw a black rectangle overlay that fades everything, then hide. 
+9. Clear screen. Remove all text, characters, and background. Draw a black rectangle overlay that fades everything, then hide.
+10. Change render to scale with letterboxing. See this for [details](https://www.raylib.com/examples/core/loader.html?name=core_window_letterbox) 

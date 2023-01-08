@@ -7,16 +7,23 @@ namespace vnyl {
     }
 
     void Menu::onUpdate(){
-        for(int i = 0; i < m_Options.size(); i++){
-            float w = GetScreenWidth() / 2;
-            float h = GetScreenHeight() / 8;
-            float x = (GetScreenWidth() / 2.0) - (w/2);
-            float p = GetScreenHeight() / 16;
-            float maxY = ((m_Options.size()) * (h + p)) - p;
-            float y = (i * (h + p)) + (GetScreenHeight() / 2.0) - (maxY/2);
+        float scale = std::min((float)GetScreenWidth()/RENDER_WIDTH, (float)GetScreenHeight()/RENDER_HEIGHT);
+        
+        Vector2 mouse = GetMousePosition();
+        Vector2 virtualMouse = { 0 };
+        virtualMouse.x = (mouse.x - (GetScreenWidth() - (RENDER_WIDTH*scale))*0.5f)/scale;
+        virtualMouse.y = (mouse.y - (GetScreenHeight() - (RENDER_HEIGHT*scale))*0.5f)/scale;
+        //virtualMouse = Vector2Clamp(virtualMouse, (Vector2){ 0, 0 }, (Vector2){ (float)RENDER_WIDTH, (float)RENDER_HEIGHT });
 
-            Vector2 mousePos = GetMousePosition();
-            if(mousePos.x > x && mousePos.x < x+w && mousePos.y > y && mousePos.y < y+h){
+        for(int i = 0; i < m_Options.size(); i++){
+            float w = RENDER_WIDTH / 2;
+            float h = RENDER_HEIGHT / 8;
+            float x = (RENDER_WIDTH / 2.0) - (w/2);
+            float p = RENDER_HEIGHT / 16;
+            float maxY = ((m_Options.size()) * (h + p)) - p;
+            float y = (i * (h + p)) + (RENDER_HEIGHT / 2.0) - (maxY/2);
+
+            if(virtualMouse.x > x && virtualMouse.x < x+w && virtualMouse.y > y && virtualMouse.y < y+h){
                 DrawRectangle(x, y, w, h, ColorAlpha(ORANGE, 0.75));
                 
                 if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){

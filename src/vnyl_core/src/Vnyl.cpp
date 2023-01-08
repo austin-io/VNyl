@@ -3,12 +3,15 @@
 namespace vnyl {
 
     Vnyl::Vnyl(){
-        const float AR = 16/9.0;
-        const int SCREEN_WIDTH  = 1600;
-        const int SCREEN_HEIGHT = SCREEN_WIDTH / AR;
-
+    
+        SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
         InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");
         SetTargetFPS(60);
+        SetWindowMinSize(720, 720 / AR);
+
+        // Render texture initialization, used to hold the rendering result so we can easily resize it
+        m_RenderTarget = LoadRenderTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
+        SetTextureFilter(m_RenderTarget.texture, TEXTURE_FILTER_BILINEAR);  // Texture scale filter to use
 
         m_ImageMap["campus"] = LoadTexture(ASSETS_PATH"BG/campus.png");
         m_ImageNames.push_back("campus");
@@ -38,12 +41,12 @@ namespace vnyl {
 
         std::vector<Character*> characters = std::vector<Character*>();
 
-        Character c = Character("Sarah", GREEN, 
+        Character c = Character("Alice", GREEN, 
             {ASSETS_PATH"Akari/Akari_Neutral.png",
              ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
             {"idle", "sus"});
 
-        Character c2 = Character("Sarah", GREEN, 
+        Character c2 = Character("Sarah", BLUE, 
             {ASSETS_PATH"Akari/Akari_Neutral.png",
              ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
             {"idle", "sus"});
@@ -66,7 +69,7 @@ namespace vnyl {
                     new Show(&c2, "sus", false, Character::LEFT),
                     new Speak(&c, "Hello VNYL! This is true"),
                     new Speak(&c, "Part 2"),
-                    new Speak(&c, "Deal with it")
+                    new Speak(&c2, "Deal with it")
                 }),
             new Branch(
                 [](){
@@ -81,24 +84,46 @@ namespace vnyl {
         while((!al.IsFinished && !al.QueueFinish) || !WindowShouldClose()){
             if(WindowShouldClose()) break;
 
+            float scale = std::min((float)GetScreenWidth()/SCREEN_WIDTH, (float)GetScreenHeight()/SCREEN_HEIGHT);
+
+            BeginTextureMode(m_RenderTarget);
+                ClearBackground(BLACK);
+
+                //*
+                DrawTexture(
+                    m_ImageMap[m_CurrentBackgroundImage],
+                    (RENDER_WIDTH/(float)2) - (m_ImageMap[m_CurrentBackgroundImage].width/(float)2),
+                    0,
+                    Fade(WHITE, m_BackgroundAlpha)
+                );
+
+                for(int i = 0; i < characters.size(); i++){
+                    characters[i]->draw();
+                }//*/
+
+                al.onUpdate();
+
+            EndTextureMode();
+
             BeginDrawing();
 
-            ClearBackground(BLACK);
+                ClearBackground(BLACK);
 
-            
-            //*
-            DrawTexture(
-                m_ImageMap[m_CurrentBackgroundImage],
-                (GetScreenWidth()/(float)2) - (m_ImageMap[m_CurrentBackgroundImage].width/(float)2),
-                0,
-                Fade(WHITE, m_BackgroundAlpha)
-            );
-
-            for(int i = 0; i < characters.size(); i++){
-                characters[i]->draw();
-            }//*/
-
-            al.onUpdate();
+                // Draw render texture to screen, properly scaled
+                DrawTexturePro(
+                    m_RenderTarget.texture, 
+                    (Rectangle){ 
+                        0.0f, 0.0f, 
+                        (float)m_RenderTarget.texture.width, 
+                        (float)-m_RenderTarget.texture.height 
+                    },
+                    (Rectangle){
+                        (GetScreenWidth() - ((float)SCREEN_WIDTH*scale))*0.5f, 
+                        (GetScreenHeight() - ((float)SCREEN_HEIGHT*scale))*0.5f,
+                        (float)SCREEN_WIDTH*scale, 
+                        (float)SCREEN_HEIGHT*scale 
+                    }, 
+                    (Vector2){ 0, 0 }, 0.0f, WHITE);
 
             EndDrawing();
 
@@ -107,6 +132,8 @@ namespace vnyl {
         al.onEnd();
 
         al.clean();
+
+        UnloadRenderTexture(m_RenderTarget);
 
     }
 

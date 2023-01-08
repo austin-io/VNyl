@@ -1,16 +1,17 @@
 #include "Character.hpp"
-#include "iostream"
+//#include <iostream>
+
 namespace vnyl {
     Vector2 Character::LEFT   = Vector2{0,0};
     Vector2 Character::RIGHT  = Vector2{0,0};
     Vector2 Character::CENTER = Vector2{0,0};
 
     Character::Character(std::string name, Color color, std::vector<std::string> sprites, std::vector<std::string> emotions){
-        Character::LEFT   = Vector2{GetScreenWidth()/(float)4, (float)GetScreenHeight()};
-        Character::RIGHT  = Vector2{3*GetScreenWidth()/(float)4, (float)GetScreenHeight()};
-        Character::CENTER = Vector2{GetScreenWidth()/(float)2, (float)GetScreenHeight()};
+        Character::LEFT   = Vector2{RENDER_WIDTH/(float)4, (float)RENDER_HEIGHT};
+        Character::RIGHT  = Vector2{3*RENDER_WIDTH/(float)4, (float)RENDER_HEIGHT};
+        Character::CENTER = Vector2{RENDER_WIDTH/(float)2, (float)RENDER_HEIGHT};
         
-        std::cout << "Vector LEFT: " << Character::LEFT.x << ", "<< Character::LEFT.y  << std::endl;
+        //std::cout << "Vector LEFT: " << Character::LEFT.x << ", "<< Character::LEFT.y  << std::endl;
         m_CurrentPosition = Character::CENTER;
         
         themeColor = color;
@@ -21,7 +22,7 @@ namespace vnyl {
             spriteMap[key] = LoadTexture(sprites[i].c_str());
             
             float ar = spriteMap[key].width / (float)spriteMap[key].height;
-            spriteMap[key].height = GetScreenHeight() * 0.9;
+            spriteMap[key].height = RENDER_HEIGHT * 0.9;
             spriteMap[key].width = spriteMap[key].height * ar;
 
             keys.push_back(key);

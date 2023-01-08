@@ -1,10 +1,12 @@
 #pragma once
 
-#include "raylib.h"
-
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+#include "raylib.h"
+
+#include "Constants.hpp"
 
 namespace vnyl {
     class Character {
@@ -24,9 +26,10 @@ namespace vnyl {
             static Vector2 RIGHT;
             static Vector2 CENTER;
 
+            Color themeColor = GREEN;
+
         private:
             Vector2 m_CurrentPosition = Vector2{0,0};
-            Color themeColor = GREEN;
             bool isHidden = true;
             std::unordered_map<std::string, Texture2D> spriteMap;
             std::vector<std::string> keys;

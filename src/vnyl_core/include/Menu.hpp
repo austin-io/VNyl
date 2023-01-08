@@ -1,10 +1,12 @@
 #pragma once
 
-#include "raylib.h"
-#include "Action.hpp"
-
 #include <vector>
 #include <string>
+
+#include "raylib.h"
+
+#include "Constants.hpp"
+#include "Action.hpp"
 
 namespace vnyl {
     class Menu : public Action {

@@ -12,10 +12,17 @@ namespace vnyl {
 
         m_ImageMap["campus"] = LoadTexture(ASSETS_PATH"BG/campus.png");
         m_ImageNames.push_back("campus");
+        
+        m_ImageMap["campus2"] = LoadTexture(ASSETS_PATH"BG/campus2.png");
+        m_ImageNames.push_back("campus2");
+        
         m_CurrentBackgroundImage = "campus";
 
         m_ImageMap["campus"].width = SCREEN_WIDTH;
         m_ImageMap["campus"].height = m_ImageMap["campus"].width * 2/3.0;
+
+        m_ImageMap["campus2"].width = SCREEN_WIDTH;
+        m_ImageMap["campus2"].height = m_ImageMap["campus2"].width * 2/3.0;
     }
 
     Vnyl::~Vnyl(){
@@ -44,10 +51,10 @@ namespace vnyl {
                 [](){
                     return true;
                 }, {
+                    new ChangeBG("campus", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c, "idle"),
-                    //new Show(&c, "idle", true),
-                    new ChangeBG("campus", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
-                    new ChangeBG("campus", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
+                    //new Show(&c, "idle", true), // hide
+                    new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c2, "sus", false, Character::LEFT),
                     new Speak(&c, "Hello VNYL! This is true"),
                     new Speak(&c, "Part 2"),

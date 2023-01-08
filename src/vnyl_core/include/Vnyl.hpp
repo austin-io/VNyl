@@ -11,6 +11,7 @@
 #include "ChangeBG.hpp"
 #include "Menu.hpp"
 #include "CodeBlock.hpp"
+#include "Loop.hpp"
 
 namespace vnyl {
     class Vnyl {

@@ -69,7 +69,16 @@ namespace vnyl {
                             std::cout << "CodeBlock: " << i << std::endl;
                         }
                     }),
-                    new Menu({"1", "2", "3", "4"}, &res),
+                    new Loop(
+                        [&](){
+                            return res != 3;
+                        },
+                        [&](){
+                            return std::vector<Action*>{
+                                new Menu({"1", "2", "3", "4"}, &res)
+                            };
+                        }
+                    ),
                     //new Show(&c, "idle", true), // hide
                     new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c2, "sus", false, Character::LEFT),

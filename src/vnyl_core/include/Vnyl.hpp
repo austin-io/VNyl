@@ -10,6 +10,7 @@
 #include "Show.hpp"
 #include "ChangeBG.hpp"
 #include "Menu.hpp"
+#include "CodeBlock.hpp"
 
 namespace vnyl {
     class Vnyl {

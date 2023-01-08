@@ -6,6 +6,7 @@
 #include "raylib.h"
 
 #include "Constants.hpp"
+#include "Utils.hpp"
 #include "Action.hpp"
 
 namespace vnyl {

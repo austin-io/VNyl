@@ -7,13 +7,8 @@ namespace vnyl {
     }
 
     void Menu::onUpdate(){
-        float scale = std::min((float)GetScreenWidth()/RENDER_WIDTH, (float)GetScreenHeight()/RENDER_HEIGHT);
         
-        Vector2 mouse = GetMousePosition();
-        Vector2 virtualMouse = { 0 };
-        virtualMouse.x = (mouse.x - (GetScreenWidth() - (RENDER_WIDTH*scale))*0.5f)/scale;
-        virtualMouse.y = (mouse.y - (GetScreenHeight() - (RENDER_HEIGHT*scale))*0.5f)/scale;
-        //virtualMouse = Vector2Clamp(virtualMouse, (Vector2){ 0, 0 }, (Vector2){ (float)RENDER_WIDTH, (float)RENDER_HEIGHT });
+        Vector2 virtualMouse = GetVirtualMousePos();
 
         for(int i = 0; i < m_Options.size(); i++){
             float w = RENDER_WIDTH / 2;

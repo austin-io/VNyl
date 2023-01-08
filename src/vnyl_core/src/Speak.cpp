@@ -18,8 +18,8 @@ namespace vnyl {
             ColorAlpha(BLACK, 0.75)
         );
 
-        DrawText(speaker->name.c_str(), 10, 10 + RENDER_HEIGHT - 0.3 * RENDER_HEIGHT, 32, speaker->themeColor);
-        DrawText(phrase.c_str(), 10, 50 + RENDER_HEIGHT - 0.3 * RENDER_HEIGHT, 32, WHITE);
+        DrawText(speaker->name.c_str(), RENDER_WIDTH * 0.15, 10 + RENDER_HEIGHT - 0.3 * RENDER_HEIGHT, 40, speaker->themeColor);
+        DrawText(phrase.c_str(), RENDER_WIDTH * 0.15, 60 + RENDER_HEIGHT - 0.3 * RENDER_HEIGHT, 40, WHITE);
 
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             QueueFinish = true;

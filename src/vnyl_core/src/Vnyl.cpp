@@ -26,6 +26,11 @@ namespace vnyl {
     }
 
     Vnyl::~Vnyl(){
+
+        for(int i = 0; i < m_ImageNames.size(); i++){
+            UnloadTexture(m_ImageMap[m_ImageNames[i]]);
+        }
+
         CloseWindow();
     }
 
@@ -46,6 +51,8 @@ namespace vnyl {
         characters.push_back(&c);
         characters.push_back(&c2);
 
+        int res = 0;
+
         ActionList al = ActionList({//*
             new Branch(
                 [](){
@@ -53,6 +60,7 @@ namespace vnyl {
                 }, {
                     new ChangeBG("campus", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c, "idle"),
+                    new Menu({"1", "2", "3", "4"}, &res),
                     //new Show(&c, "idle", true), // hide
                     new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c2, "sus", false, Character::LEFT),
@@ -77,7 +85,6 @@ namespace vnyl {
 
             ClearBackground(BLACK);
 
-            al.onUpdate();
             
             //*
             DrawTexture(
@@ -90,6 +97,8 @@ namespace vnyl {
             for(int i = 0; i < characters.size(); i++){
                 characters[i]->draw();
             }//*/
+
+            al.onUpdate();
 
             EndDrawing();
 

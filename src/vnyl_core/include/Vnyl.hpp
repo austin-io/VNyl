@@ -6,6 +6,7 @@
 #include "Character.hpp"
 #include "Show.hpp"
 #include "ChangeBG.hpp"
+#include "Menu.hpp"
 
 namespace vnyl {
     class Vnyl {

@@ -63,6 +63,7 @@ namespace vnyl {
                 }, {
                     new ChangeBG("campus", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c, "idle"),
+                    new Speak(&c, "Dummy text that is really long and verbose. Dummy text that is really long and verbose. Dummy text that is really long and verbose. "),
                     new Menu({"1", "2", "3", "4"}, &res),
                     //new Show(&c, "idle", true), // hide
                     new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
@@ -84,7 +85,7 @@ namespace vnyl {
         while((!al.IsFinished && !al.QueueFinish) || !WindowShouldClose()){
             if(WindowShouldClose()) break;
 
-            float scale = std::min((float)GetScreenWidth()/SCREEN_WIDTH, (float)GetScreenHeight()/SCREEN_HEIGHT);
+            float scale = std::min((float)GetScreenWidth()/RENDER_WIDTH, (float)GetScreenHeight()/RENDER_HEIGHT);
 
             BeginTextureMode(m_RenderTarget);
                 ClearBackground(BLACK);
@@ -118,10 +119,10 @@ namespace vnyl {
                         (float)-m_RenderTarget.texture.height 
                     },
                     (Rectangle){
-                        (GetScreenWidth() - ((float)SCREEN_WIDTH*scale))*0.5f, 
-                        (GetScreenHeight() - ((float)SCREEN_HEIGHT*scale))*0.5f,
-                        (float)SCREEN_WIDTH*scale, 
-                        (float)SCREEN_HEIGHT*scale 
+                        (GetScreenWidth() - ((float)RENDER_WIDTH*scale))*0.5f, 
+                        (GetScreenHeight() - ((float)RENDER_HEIGHT*scale))*0.5f,
+                        (float)RENDER_WIDTH*scale, 
+                        (float)RENDER_HEIGHT*scale 
                     }, 
                     (Vector2){ 0, 0 }, 0.0f, WHITE);
 

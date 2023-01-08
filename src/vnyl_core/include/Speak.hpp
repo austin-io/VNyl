@@ -1,9 +1,11 @@
 #pragma once
 
+//#include <iostream>
+
 #include "Constants.hpp"
+#include "Utils.hpp"
 #include "Action.hpp"
 #include "Character.hpp"
-#include <iostream>
 
 namespace vnyl {
     class Speak : public Action {
@@ -15,5 +17,9 @@ namespace vnyl {
 
             Character* speaker;
             std::string phrase = "";
+        
+        protected:
+            float m_TextCounter = 0;
+            bool m_TextAnimFinished = false;
     };
 };

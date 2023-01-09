@@ -20,6 +20,9 @@ namespace vnyl {
         addMusic("main", ASSETS_PATH"Audio/BG_Main.ogg");
         addMusic("calm", ASSETS_PATH"Audio/BG_Calm.ogg");
 
+        addSound("correct", ASSETS_PATH"Audio/SFX_Correct.ogg");
+        addSound("congratulations", ASSETS_PATH"Audio/SFX_Congratulations.ogg");
+
     }
 
     Vnyl::~Vnyl(){
@@ -63,7 +66,8 @@ namespace vnyl {
     }
 
     void Vnyl::addSound(std::string name, std::string filepath){
-
+        m_SoundMap[name] = LoadSound(filepath.c_str());
+        m_SoundNames.push_back(name);
     }
 
 
@@ -109,13 +113,15 @@ namespace vnyl {
                             };
                         }
                     ),
+                    new PlaySound(m_SoundMap["correct"]),
                     //new Show(&c, "idle", true), // hide
                     new ChangeMusic("calm", &m_CurrentBGM, &m_MusicMap),
                     new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c2, "sus", false, Character::LEFT),
-                    new Speak(&c, "Hello VNYL! This is true"),
-                    new Speak(&c, "Part 2"),
-                    new Speak(&c2, "Deal with it")
+                    new Speak(&c, "Hey Sarah! How did the quiz go?"),
+                    new Speak(&c2, "I got an A+"),
+                    new PlaySound(m_SoundMap["congratulations"]),
+                    new Speak(&c, "Congratulations! Well done!")
                 }),
             new Branch(
                 [](){

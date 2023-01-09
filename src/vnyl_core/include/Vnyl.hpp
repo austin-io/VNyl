@@ -15,6 +15,7 @@
 #include "CodeBlock.hpp"
 #include "Loop.hpp"
 #include "ChangeMusic.hpp"
+#include "PlaySound.hpp"
 
 namespace vnyl {
     class Vnyl {

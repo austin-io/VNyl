@@ -48,7 +48,7 @@ When using VSCode install the `C/C++ Extension Pack`. CMake will try to configur
 1. ~~Draw/hide characters. Add to list. Have predefined locations. Fade in/ out~~
 2. ~~Set background image. Preload all of them. Add textures to dictionaries and select one. Fade in/out~~
 3. ~~Set background music. Preload all of them. Add audio to dictionaries and select one to play on loop~~
-4. Play sound effects. Preload all of them. Halt execution until finished?
+4. ~~Play sound effects. Preload all of them. Halt execution until finished?~~
 5. ~~Code block. Pass in a generic lambda to execute~~
 6. ~~While loop. Repeat Action List until condition is false~~
 7. ~~Show text. Reveal text character by character. Display character name. Click to skip, click to continue~~

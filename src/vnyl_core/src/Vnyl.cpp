@@ -6,6 +6,7 @@ namespace vnyl {
     
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
         InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");
+        InitAudioDevice();
         SetTargetFPS(60);
         SetWindowMinSize(720, 720 / AR);
 
@@ -13,29 +14,58 @@ namespace vnyl {
         m_RenderTarget = LoadRenderTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
         SetTextureFilter(m_RenderTarget.texture, TEXTURE_FILTER_BILINEAR);  // Texture scale filter to use
 
-        m_ImageMap["campus"] = LoadTexture(ASSETS_PATH"BG/campus.png");
-        m_ImageNames.push_back("campus");
-        
-        m_ImageMap["campus2"] = LoadTexture(ASSETS_PATH"BG/campus2.png");
-        m_ImageNames.push_back("campus2");
-        
-        m_CurrentBackgroundImage = "campus";
+        addBackground("campus", ASSETS_PATH"BG/campus.png");
+        addBackground("campus2", ASSETS_PATH"BG/campus2.png");
 
-        m_ImageMap["campus"].width = SCREEN_WIDTH;
-        m_ImageMap["campus"].height = m_ImageMap["campus"].width * 2/3.0;
+        addMusic("main", ASSETS_PATH"Audio/BG_Main.ogg");
+        addMusic("calm", ASSETS_PATH"Audio/BG_Calm.ogg");
 
-        m_ImageMap["campus2"].width = SCREEN_WIDTH;
-        m_ImageMap["campus2"].height = m_ImageMap["campus2"].width * 2/3.0;
     }
 
     Vnyl::~Vnyl(){
+
+        StopSoundMulti();
 
         for(int i = 0; i < m_ImageNames.size(); i++){
             UnloadTexture(m_ImageMap[m_ImageNames[i]]);
         }
 
+        for(int i = 0; i < m_MusicNames.size(); i++){
+            UnloadMusicStream(m_MusicMap[m_MusicNames[i]]);
+        }
+
+        for(int i = 0; i < m_SoundNames.size(); i++){
+            UnloadSound(m_SoundMap[m_SoundNames[i]]);
+        }
+
+        CloseAudioDevice();
         CloseWindow();
     }
+
+    void Vnyl::addBackground(std::string name, std::string filepath){
+        m_ImageMap[name] = LoadTexture(filepath.c_str());
+        m_ImageNames.push_back(name);
+
+        const float ratio = m_ImageMap[name].width / m_ImageMap[name].height;
+
+        m_ImageMap[name].width = SCREEN_WIDTH;
+        m_ImageMap[name].height = m_ImageMap[name].width / ratio;
+
+        if(m_CurrentBackgroundImage == "")
+            m_CurrentBackgroundImage = name;
+    }
+
+    void Vnyl::addMusic(std::string name, std::string filepath){
+        m_MusicMap[name] = LoadMusicStream(filepath.c_str());
+        m_MusicNames.push_back(name);
+
+        if(m_CurrentBGM == "") m_CurrentBGM = name;
+    }
+
+    void Vnyl::addSound(std::string name, std::string filepath){
+
+    }
+
 
     void Vnyl::run(){
 
@@ -80,6 +110,7 @@ namespace vnyl {
                         }
                     ),
                     //new Show(&c, "idle", true), // hide
+                    new ChangeMusic("calm", &m_CurrentBGM, &m_MusicMap),
                     new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
                     new Show(&c2, "sus", false, Character::LEFT),
                     new Speak(&c, "Hello VNYL! This is true"),
@@ -94,10 +125,14 @@ namespace vnyl {
                 }),//*/
         });
 
+        PlayMusicStream(m_MusicMap[m_CurrentBGM]);
+
         al.onStart();
 
         while((!al.IsFinished && !al.QueueFinish) || !WindowShouldClose()){
             if(WindowShouldClose()) break;
+
+            UpdateMusicStream(m_MusicMap[m_CurrentBGM]);
 
             float scale = std::min((float)GetScreenWidth()/RENDER_WIDTH, (float)GetScreenHeight()/RENDER_HEIGHT);
 
@@ -108,7 +143,7 @@ namespace vnyl {
                 DrawTexture(
                     m_ImageMap[m_CurrentBackgroundImage],
                     (RENDER_WIDTH/(float)2) - (m_ImageMap[m_CurrentBackgroundImage].width/(float)2),
-                    0,
+                    (RENDER_HEIGHT/(float)2) - (m_ImageMap[m_CurrentBackgroundImage].height/(float)2),
                     Fade(WHITE, m_BackgroundAlpha)
                 );
 

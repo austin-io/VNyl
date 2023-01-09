@@ -3,9 +3,16 @@
 namespace vnyl {
 
     Vnyl::Vnyl(){
-    
+        //init("VNyl Engine");
+        //*m_MainActionList = ActionList(std::vector<Action*>());
+    }
+
+    Vnyl::~Vnyl(){
+    }
+
+    void Vnyl::init(std::string windowName){
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-        InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "VNyl Demo");
+        InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, windowName.c_str());
         InitAudioDevice();
         SetTargetFPS(60);
         SetWindowMinSize(720, 720 / AR);
@@ -15,36 +22,6 @@ namespace vnyl {
         SetTextureFilter(m_RenderTarget.texture, TEXTURE_FILTER_BILINEAR);  // Texture scale filter to use
 
         std::vector<Character*> m_Characters = std::vector<Character*>();
-
-        addBackground("campus", ASSETS_PATH"BG/campus.png");
-        addBackground("campus2", ASSETS_PATH"BG/campus2.png");
-
-        addMusic("main", ASSETS_PATH"Audio/BG_Main.ogg");
-        addMusic("calm", ASSETS_PATH"Audio/BG_Calm.ogg");
-
-        addSound("correct", ASSETS_PATH"Audio/SFX_Correct.ogg");
-        addSound("congratulations", ASSETS_PATH"Audio/SFX_Congratulations.ogg");
-
-    }
-
-    Vnyl::~Vnyl(){
-
-        StopSoundMulti();
-
-        for(int i = 0; i < m_ImageNames.size(); i++){
-            UnloadTexture(m_ImageMap[m_ImageNames[i]]);
-        }
-
-        for(int i = 0; i < m_MusicNames.size(); i++){
-            UnloadMusicStream(m_MusicMap[m_MusicNames[i]]);
-        }
-
-        for(int i = 0; i < m_SoundNames.size(); i++){
-            UnloadSound(m_SoundMap[m_SoundNames[i]]);
-        }
-
-        CloseAudioDevice();
-        CloseWindow();
     }
 
     void Vnyl::addBackground(std::string name, std::string filepath){
@@ -93,70 +70,11 @@ namespace vnyl {
 
         //std::vector<Character*> characters = std::vector<Character*>();
 
-        Character c = Character("Alice", GREEN, 
-            {ASSETS_PATH"Akari/Akari_Neutral.png",
-             ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
-            {"idle", "sus"});
-
-        Character c2 = Character("Sarah", BLUE, 
-            {ASSETS_PATH"Akari/Akari_Neutral.png",
-             ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
-            {"idle", "sus"});
-        
-        m_Characters.push_back(&c);
-        m_Characters.push_back(&c2);
-
-        int res = 0;
-
-        ActionList al = ActionList({//*
-            new Branch(
-                [](){
-                    return true;
-                }, {
-                    new ChangeBG("campus", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
-                    new Show(&c, "idle"),
-                    new Speak(&c, "Dummy text that is really long and verbose. Dummy text that is really long and verbose. Dummy text that is really long and verbose. "),
-                    new CodeBlock([](){
-                        for(int i = 0; i < 10; i++){
-                            std::cout << "CodeBlock: " << i << std::endl;
-                        }
-                    }),
-                    new Loop(
-                        [&](){
-                            return res != 3;
-                        },
-                        [&](){
-                            return std::vector<Action*>{
-                                new Menu({"1", "2", "3", "4"}, &res)
-                            };
-                        }
-                    ),
-                    new PlaySound(m_SoundMap["correct"]),
-                    //new Show(&c, "idle", true), // hide
-                    ClearScreen(),
-                    new ChangeMusic("calm", &m_CurrentBGM, &m_MusicMap),
-                    new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
-                    new Show(&c, "idle"),
-                    new Show(&c2, "sus", false, Character::LEFT),
-                    new Speak(&c, "Hey Sarah! How did the quiz go?"),
-                    new Speak(&c2, "I got an A+"),
-                    new PlaySound(m_SoundMap["congratulations"]),
-                    new Speak(&c, "Congratulations! Well done!")
-                }),
-            new Branch(
-                [](){
-                    return false;
-                }, {
-                    new Speak(&c, "Hello VNYL! This is false")
-                }),//*/
-            ClearScreen()
-        });
-
         PlayMusicStream(m_MusicMap[m_CurrentBGM]);
 
-        al.onStart();
+        m_MainActionList->onStart();
 
-        while((!al.IsFinished && !al.QueueFinish) || !WindowShouldClose()){
+        while((!m_MainActionList->IsFinished && !m_MainActionList->QueueFinish) || !WindowShouldClose()){
             if(WindowShouldClose()) break;
 
             UpdateMusicStream(m_MusicMap[m_CurrentBGM]);
@@ -180,7 +98,7 @@ namespace vnyl {
 
                 DrawRectangle(0,0, RENDER_WIDTH, RENDER_HEIGHT, ColorAlpha(BLACK, m_OverlayAlpha));
 
-                al.onUpdate();
+                m_MainActionList->onUpdate();
 
             EndTextureMode();
 
@@ -208,16 +126,33 @@ namespace vnyl {
 
         }
 
-        al.onEnd();
+        m_MainActionList->onEnd();
 
-        al.clean();
+        m_MainActionList->clean();
 
         UnloadRenderTexture(m_RenderTarget);
 
     }
 
     void Vnyl::clean(){
+        delete m_MainActionList;
 
+        StopSoundMulti();
+
+        for(int i = 0; i < m_ImageNames.size(); i++){
+            UnloadTexture(m_ImageMap[m_ImageNames[i]]);
+        }
+
+        for(int i = 0; i < m_MusicNames.size(); i++){
+            UnloadMusicStream(m_MusicMap[m_MusicNames[i]]);
+        }
+
+        for(int i = 0; i < m_SoundNames.size(); i++){
+            UnloadSound(m_SoundMap[m_SoundNames[i]]);
+        }
+
+        CloseAudioDevice();
+        CloseWindow();
     }
 
 }

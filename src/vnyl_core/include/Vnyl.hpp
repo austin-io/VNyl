@@ -24,6 +24,7 @@ namespace vnyl {
             Vnyl();
             virtual ~Vnyl();
 
+            void init(std::string windowName);
             void run();
             void clean();
 
@@ -35,6 +36,8 @@ namespace vnyl {
         
         protected:
             RenderTexture2D m_RenderTarget;
+
+            ActionList* m_MainActionList;
             
             float m_BackgroundAlpha = 0;
             float m_OverlayAlpha = 0;

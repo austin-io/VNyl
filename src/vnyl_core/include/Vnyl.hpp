@@ -16,6 +16,7 @@
 #include "Loop.hpp"
 #include "ChangeMusic.hpp"
 #include "PlaySound.hpp"
+#include "ScreenFade.hpp"
 
 namespace vnyl {
     class Vnyl {
@@ -29,11 +30,15 @@ namespace vnyl {
             void addBackground(std::string name, std::string filepath);
             void addMusic(std::string name, std::string filepath);
             void addSound(std::string name, std::string filepath);
+
+            Action* ClearScreen();
         
         protected:
             RenderTexture2D m_RenderTarget;
             
             float m_BackgroundAlpha = 0;
+            float m_OverlayAlpha = 0;
+
             std::string m_CurrentBackgroundImage = "";
             std::unordered_map<std::string, Texture2D> m_ImageMap = {};
             std::vector<std::string> m_ImageNames = {};
@@ -44,6 +49,8 @@ namespace vnyl {
 
             std::unordered_map<std::string, Sound> m_SoundMap = {};
             std::vector<std::string> m_SoundNames = {};
+
+            std::vector<Character*> m_Characters;
 
             const float AR = 16/9.0;
             const int SCREEN_WIDTH  = RENDER_WIDTH;

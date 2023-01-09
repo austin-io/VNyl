@@ -14,6 +14,8 @@ namespace vnyl {
         m_RenderTarget = LoadRenderTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
         SetTextureFilter(m_RenderTarget.texture, TEXTURE_FILTER_BILINEAR);  // Texture scale filter to use
 
+        std::vector<Character*> m_Characters = std::vector<Character*>();
+
         addBackground("campus", ASSETS_PATH"BG/campus.png");
         addBackground("campus2", ASSETS_PATH"BG/campus2.png");
 
@@ -70,10 +72,26 @@ namespace vnyl {
         m_SoundNames.push_back(name);
     }
 
+    Action* Vnyl::ClearScreen(){
+
+        return new ActionList({
+            new ScreenFade(&m_OverlayAlpha),
+            //new ChangeBG("", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
+            new CodeBlock([&](){
+                m_CurrentBackgroundImage = "";
+                m_BackgroundAlpha = 0;
+                for(int i = 0; i < m_Characters.size(); i++){
+                    m_Characters[i]->hide();
+                }
+            }),
+            //new ChangeMusic("", &m_CurrentBGM, &m_MusicMap),
+            new ScreenFade(&m_OverlayAlpha, true)
+        });
+    }
 
     void Vnyl::run(){
 
-        std::vector<Character*> characters = std::vector<Character*>();
+        //std::vector<Character*> characters = std::vector<Character*>();
 
         Character c = Character("Alice", GREEN, 
             {ASSETS_PATH"Akari/Akari_Neutral.png",
@@ -85,8 +103,8 @@ namespace vnyl {
              ASSETS_PATH"Setsuko/Setsuko_Neutral.png"}, 
             {"idle", "sus"});
         
-        characters.push_back(&c);
-        characters.push_back(&c2);
+        m_Characters.push_back(&c);
+        m_Characters.push_back(&c2);
 
         int res = 0;
 
@@ -115,8 +133,10 @@ namespace vnyl {
                     ),
                     new PlaySound(m_SoundMap["correct"]),
                     //new Show(&c, "idle", true), // hide
+                    ClearScreen(),
                     new ChangeMusic("calm", &m_CurrentBGM, &m_MusicMap),
                     new ChangeBG("campus2", &m_CurrentBackgroundImage, &m_BackgroundAlpha),
+                    new Show(&c, "idle"),
                     new Show(&c2, "sus", false, Character::LEFT),
                     new Speak(&c, "Hey Sarah! How did the quiz go?"),
                     new Speak(&c2, "I got an A+"),
@@ -129,6 +149,7 @@ namespace vnyl {
                 }, {
                     new Speak(&c, "Hello VNYL! This is false")
                 }),//*/
+            ClearScreen()
         });
 
         PlayMusicStream(m_MusicMap[m_CurrentBGM]);
@@ -153,9 +174,11 @@ namespace vnyl {
                     Fade(WHITE, m_BackgroundAlpha)
                 );
 
-                for(int i = 0; i < characters.size(); i++){
-                    characters[i]->draw();
+                for(int i = 0; i < m_Characters.size(); i++){
+                    m_Characters[i]->draw();
                 }//*/
+
+                DrawRectangle(0,0, RENDER_WIDTH, RENDER_HEIGHT, ColorAlpha(BLACK, m_OverlayAlpha));
 
                 al.onUpdate();
 
